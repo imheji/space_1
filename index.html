@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>distant view</title>
+
+
+	<style type="text/css">
+		
+
+	body  { margin: 0;
+	  display: block;
+	  height:13000px;
+	  background: black;
+
+	  -ms-overflow-style:none;
+	}
+
+	body::-webkit-scrollbar {display: none;}
+
+	h1{
+	  text-align: center;
+	  color: black;
+	  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	}
+	#cat-vid{
+	  position: fixed ;
+	  top: 50%;
+	  left: 50%;
+	  margin-left: -300px;
+	  margin-top: -255px;
+	  width: 600px;
+	  height: 450px;
+	}
+
+
+
+
+
+
+
+	nav { position: sticky; top: 0px; margin-left: 2%;}
+
+
+	a { text-decoration:none }
+
+	
+ 	a:visited { color: black; text-decoration: none;}
+ 	a:hover { color: black; text-decoration: none;}
+
+
+
+
+
+
+	.container{
+   max-width:200px;
+   background color: black
+   margin-left: 10%;
+   padding:10px 0px 20px 0px;
+   border:0px solid #111;
+   border-radius:4px;
+   box-shadow:0px 4px 5px rgba(0, 0, 0, 0.75);
+}
+.link{
+   font-size:18px;
+   font-weight:300;
+   text-align:left;
+   position:relative;
+   height:40px;
+   line-height:40px;
+   margin-top:10px;
+   overflow:hidden;
+   width:90%;
+   margin-left:5%;
+   cursor:pointer;
+}
+.link:after{
+   content: '';
+   position:absolute;
+   width:80%;
+   border-bottom:1px solid rgba(255, 255, 255, 0.5);
+   bottom:50%;
+   left:-100%;
+   transition-delay: all 0.5s;
+   transition: all 0.5s;
+}
+.link:hover:after,
+.link.hover:after{
+   left:100%;
+}
+.link .text{
+   text-shadow:0px -40px 0px rgba(255, 255, 255, 1);
+   transition:all 0.75s;
+   transform:translateY(100%) translateZ(0);
+   transition-delay:all 0.25s;
+}
+.link:hover .text,
+.link.hover .text{
+   text-shadow:0px -40px 0px rgba(255, 255, 255, 0);
+   transform:translateY(0%) translateZ(0) scale(1.1);
+   font-weight:600;
+}
+
+
+
+
+.seek-bar{margin-top:25%; margin-left:18%;width:1000px;height:2px;background:#ffffff;border-radius:5px; position: fixed; left: 50%)
+          }
+.seek-bar>.circle{cursor:grab;position:absolute;left:0;top:50%;width:30px;height:30px;transform:translate(-50%,-50%);touch-action: none;}
+.seek-bar>.circle>span{position:absolute;display:block;width:30px;line-height:30px;left:50%;top:50%;transform:translate(-50%,-50%);background:#ffffff;border-radius:100%;text-align:center; color: white;}
+
+
+
+
+
+
+
+
+	</style>
+
+	<script src="jquery-3.6.0.min.js"></script>
+
+</head>
+<body>
+
+
+<nav>
+	
+<div class="container">
+  <div class="link">
+    <div class="text"><a href="1.html">distant view</a></div>
+  </div>
+  <div class="link">
+    <div class="text"><a href="2.html">middle distance view</a></div>
+  </div>
+  <div class="link">
+    <div class="text"><a href="3.html">close-range view</a></div>
+  </div>
+  <div class="link">
+    <div class="text"><a href="4.html">about space debris</a></div>
+  </div>
+
+</div>
+
+
+  <script type="text/javascript">
+  	
+  	var links = document.getElementsByClassName('link')
+	for(var i = 0; i <= links.length; i++)
+	   addClass(i)
+
+
+	function addClass(id){
+   setTimeout(function(){
+      if(id > 0) links[id-1].classList.remove('hover')
+      links[id].classList.add('hover')
+   }, id*750) 
+}
+
+
+
+
+  </script>
+
+
+
+
+
+</nav>
+
+
+<script type="text/javascript">
+
+
+	
+
+	$(function () {
+
+    var vid = $('#cat-vid')[0];
+    
+    window.onscroll = function () {
+        vid.pause();
+    };
+    
+    setInterval(function () {
+       vid.currentTime = window.pageYOffset / 1200;   
+    }, 23);             
+});
+</script>
+
+
+
+
+
+	
+<video id="cat-vid" src="test.mp4" tabindex="0" autobuffer preload muted>
+</video>
+
+<div class="seek-bar">
+  <div id="circle" class="circle">
+    <span>0</span>
+  </div>
+</div>
+
+<script type="text/javascript">
+  dragElement(document.getElementById("circle"));
+
+function dragElement(elmnt) {
+  let clientX_gab = 0, clientX = 0;
+  elmnt.onmousedown = dragMouseDown;
+  elmnt.addEventListener('touchstart',dragMouseDown)
+  function dragMouseDown(e) {
+    e = e || window.event;
+    e.preventDefault();
+    if (e.changedTouches) {
+      e.clientX = e.changedTouches[0].clientX
+    }
+    clientX = e.clientX;
+    document.onmouseup = closeDragElement;
+    document.addEventListener('touchend',closeDragElement);
+    document.onmousemove = elementDrag;
+    document.addEventListener('touchmove',elementDrag);
+  }
+
+  function elementDrag(e) {
+    e = e || window.event;
+    e.preventDefault(); 
+    if (e.changedTouches) {
+      e.clientX = e.changedTouches[0].clientX
+    }
+    clientX_gab = e.clientX - clientX;
+    clientX = e.clientX;
+    let leftVal = 0;
+    let parentElmnt = elmnt.parentNode;
+    if (
+      (elmnt.offsetLeft + clientX_gab) < 0 ||
+      clientX < parentElmnt.offsetLeft) 
+      {
+      leftVal = 0;
+    } else if(
+      (elmnt.offsetLeft + clientX_gab) > parentElmnt.clientWidth ||
+      clientX > (parentElmnt.offsetLeft+parentElmnt.clientWidth))
+      {
+      leftVal = parentElmnt.clientWidth;
+    } else {
+      leftVal = (elmnt.offsetLeft + clientX_gab);
+    }
+    elmnt.querySelector('span').innerText = Math.round((leftVal /parentElmnt.clientWidth)*100);
+    
+    elmnt.style.left = leftVal + "px";
+  }
+
+  function closeDragElement() {
+    document.onmouseup = null;
+    document.removeEventListener('touchend', closeDragElement);
+    document.onmousemove = null;
+    document.removeEventListener('touchmove', elementDrag);
+  }
+}
+</script>
+
+
+</body>
+</html>
